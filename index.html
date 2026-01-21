@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spellingscheck: Justitie & Samenstellingen</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        p.instructie { background: #e7f3fe; padding: 10px; border-left: 5px solid #2196F3; }
+        .oefening-item { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        input { padding: 5px; border: 1px solid #ccc; border-radius: 4px; width: 250px; font-size: 14px; }
+        .correct { background-color: #d4edda; border-color: #28a745; }
+        .fout { background-color: #f8d7da; border-color: #dc3545; }
+        button { padding: 10px 20px; background: #2c3e50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        button:hover { background: #1a252f; }
+        #resultaat { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Invuloefening: Samenstellingen & Justitie</h1>
+    <p class="instructie">
+        Combineer de woorden tot één correcte samenstelling. Let op: <br>
+        1. Schrijf aan elkaar als er geen klankconflict is.<br>
+        2. Gebruik een <strong>koppelteken (-)</strong> bij een klankconflict (klinkerbotsing).<br>
+        3. Gebruik een <strong>koppelteken (-)</strong> bij afkortingen.
+    </p>
+
+    <div id="quiz">
+        <!-- De vragen worden hier door JS gegenereerd -->
+    </div>
+
+    <button onclick="checkAntwoorden()">Controleer Antwoorden</button>
+    <div id="resultaat"></div>
+</div>
+
+<script>
+    const opdrachten = [
+        { d: "politie + auto", a: "politieauto" },
+        { d: "jury + uitspraak", a: "jury-uitspraak" }, // klankconflict y-u
+        { d: "TBS + kliniek", a: "TBS-kliniek" }, // afkorting
+        { d: "rechter + hamer", a: "rechterhamer" },
+        { d: "balie + assistent", a: "balie-assistent" }, // klankconflict e-a
+        { d: "DNA + onderzoek", a: "DNA-onderzoek" }, // afkorting
+        { d: "fraude + expert", a: "fraude-expert" }, // klankconflict e-e
+        { d: "getuige + verklaring", a: "getuigeverklaring" },
+        { d: "hoofd + officier", a: "hoofdofficier" },
+        { d: "kopie + apparaat", a: "kopie-apparaat" }, // klankconflict ie-a
+        { d: "BRP + uittreksel", a: "BRP-uittreksel" }, // afkorting
+        { d: "overval + alarm", a: "overvalalarm" },
+        { d: "vrijspraak + eis", a: "vrijspraakeis" },
+        { d: "politie + onderzoek", a: "politie-onderzoek" }, // klankconflict ie-o
+        { d: "gedetineerde + opvang", a: "gedetineerde-opvang" }, // klankconflict e-o
+        { d: "OM + beleid", a: "OM-beleid" }, // afkorting
+        { d: "proces + verbaal", a: "procesverbaal" },
+        { d: "milieu + inspectie", a: "milieu-inspectie" }, // klankconflict u-i
+        { d: "drugs + inval", a: "drugsinval" },
+        { d: "AI + systeem", a: "AI-systeem" }, // afkorting
+        { d: "garage + eigenaar", a: "garage-eigenaar" }, // klankconflict e-e
+        { d: "misdaad + analyse", a: "misdaadanalyse" },
+        { d: "camera + toezicht", a: "cameratoezicht" },
+        { d: "boa + opleiding", a: "boa-opleiding" }, // klankconflict a-o
+        { d: "WvK + artikel", a: "WvK-artikel" } // afkorting
+    ];
+
+    const quizDiv = document.getElementById('quiz');
+
+    opdrachten.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'oefening-item';
+        div.innerHTML = `
+            <span>${index + 1}. ${item.d} = </span>
+            <input type="text" id="input-${index}" placeholder="Typ hier het woord...">
+        `;
+        quizDiv.appendChild(div);
+    });
+
+    function checkAntwoorden() {
+        let score = 0;
+        opdrachten.forEach((item, index) => {
+            const input = document.getElementById(`input-${index}`);
+            if (input.value.trim().toLowerCase() === item.a.toLowerCase()) {
+                input.className = 'correct';
+                score++;
+            } else {
+                input.className = 'fout';
+            }
+        });
+        document.getElementById('resultaat').innerText = `Je score is: ${score} / ${opdrachten.length}`;
+    }
+</script>
+
+</body>
+</html>
